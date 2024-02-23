@@ -1,6 +1,7 @@
 import './App.css'
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { Errormsg } from './components/Errormsg';
 
 
 const validate = values =>
@@ -46,6 +47,11 @@ const validateSchema = Yup.object().shape({
     name: '',
     email: '',
     channel: '',
+    social:{
+      facebook:"",
+      twitter:""
+    },
+    phoneno:['','']
   };
 
 function App() {
@@ -75,7 +81,9 @@ function App() {
           className="form-control"
           // {...formik.getFieldProps('name')}
         />
-       <ErrorMessage name='name' />
+       <ErrorMessage name='name' component={Errormsg}>
+                    
+       </ErrorMessage>
       </div>
 
       <div className="form-group">
@@ -89,7 +97,12 @@ function App() {
           // value={formik.values.email}
           // onBlur={formik.handleBlur}
         />
-       <ErrorMessage name='email' />
+       <ErrorMessage name='email'>
+        {
+          (err)=><div className='error-message'>{err}</div>
+        }
+       </ErrorMessage>
+
       </div>
 
       <div className="form-group">
@@ -102,6 +115,26 @@ function App() {
         />
         <ErrorMessage name='channel' />
       </div>
+
+      <div>
+        <label htmlFor='facebook'>Facebook</label>
+        <Field className="form-control" type="text" name="social.facebook"  ></Field>
+      </div>
+
+      <div>
+        <label htmlFor='social.twitter'>twitter</label>
+        <Field className="form-control" type="text" name="social.twitter"  ></Field>
+      </div>
+
+      <div>
+        <label htmlFor='phno1'>Phno 1</label>
+        <Field className="form-control" type="number" name="phoneno[0]"  ></Field>
+      </div>
+      <div>
+        <label htmlFor='phno2'>Phno 2</label>
+        <Field className="form-control" type="number" name="phoneno[1]"  ></Field>
+      </div>
+
 
       <button type="submit" className="btn btn-primary">
         Submit
